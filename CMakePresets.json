@@ -1,0 +1,34 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": { "major": 4, "minor": 0, "patch": 0 },
+    "configurePresets": [
+        {
+            "name": "windows-base",
+            "hidden": true,
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "msvc",
+            "displayName": "MSVC (cl)",
+            "inherits": "windows-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "msvc-debug",       "configurePreset": "msvc",     "configuration": "Debug" },
+        { "name": "msvc-release",     "configurePreset": "msvc",     "configuration": "Release" }
+    ]
+}
